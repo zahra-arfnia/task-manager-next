@@ -11,7 +11,7 @@ import {
 import { Input } from "../ui/input";
 import { useState, useEffect, useRef } from "react";
 
-export const AddNewTaskCard = ({  onAdded }) => {
+export const AddNewTask = ({ classname, onAdded }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -22,22 +22,20 @@ export const AddNewTaskCard = ({  onAdded }) => {
   const [error, setError] = useState("");
 
   const closeRef = useRef(null);
-
-
   useEffect(() => {
     async function fetchDirectories() {
       const res = await fetch("/api/directories");
       const data = await res.json();
       setDirectories(data);
 
-
+   
       const mainDir = data.find((d) => d.name.toLowerCase() === "main");
       setSelectedDirectory(mainDir?._id || data[0]?._id || "");
     }
     fetchDirectories();
   }, []);
 
-
+ 
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -64,7 +62,7 @@ export const AddNewTaskCard = ({  onAdded }) => {
     });
 
     if (res.ok) {
- 
+
       setTitle("");
       setDescription("");
       setDeadline("");
@@ -80,27 +78,27 @@ export const AddNewTaskCard = ({  onAdded }) => {
   return (
     <Dialog>
       <DialogTrigger
-        className={` text-slate-700 py-3 font-semibold rounded-lg border-dashed border-2 border-slate-300 text-sm w-64 h-56`}
+        className={` dark:text-white py-3 font-semibold rounded-lg text-sm ${classname}`}
       >
         Add New Task
       </DialogTrigger>
 
-      <DialogContent className="bg-slate-300 border-none">
+      <DialogContent className="dark:bg-gray-900 bg-slate-300 border-none">
         <DialogHeader>
-          <DialogTitle className="text-slate-700 font-semibold text-lg">
+          <DialogTitle className="dark:text-slate-100 text-slate-700 font-semibold text-lg">
             Add a Task
           </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit}>
-      
+     
           <div className="mb-4">
-            <div className="text-slate-700 font-semibold text-sm mb-1">Title</div>
+            <div className="dark:text-slate-100 text-slate-700 font-semibold text-sm mb-1">Title</div>
             <Input
               placeholder="Enter task title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="bg-slate-100 font-medium text-slate-400 border-none px-4 py-2 w-full"
+              className="dark:bg-gray-700 dark:text-slate-100 bg-slate-100 font-medium text-slate-400 border-none px-4 py-2 w-full"
             />
             {error && !title.trim() && (
               <p className="text-red-500 text-sm mt-1">Title cannot be empty</p>
@@ -109,32 +107,36 @@ export const AddNewTaskCard = ({  onAdded }) => {
 
          
           <div className="mb-4">
-            <div className="text-slate-700 font-semibold text-sm mb-1">Deadline</div>
+            <div className="dark:text-slate-100 text-slate-700 font-semibold text-sm mb-1">Deadline</div>
             <Input
               type="date"
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}
-              className="bg-slate-100 border-none px-4 py-2 w-full font-medium text-slate-700"
+              className="dark:bg-gray-700 dark:text-slate-100 bg-slate-100 border-none px-4 py-2 w-full font-medium text-slate-700"
             />
+               {error && !deadline.trim() && (
+              <p className="text-red-500 text-sm mt-1">you must select a deadline</p>
+            )}
           </div>
 
-   
+    
           <div className="mb-4">
-            <div className="text-slate-700 font-semibold text-sm mb-1">Description</div>
+            <div className="dark:text-slate-100 text-slate-700 font-semibold text-sm mb-1">Description</div>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="bg-slate-100 border-none px-4 py-2 w-full h-24 resize-none rounded-md text-slate-700"
+              className="dark:bg-gray-700 dark:text-slate-100 bg-slate-100 border-none px-4 py-2 w-full h-24 resize-none rounded-md text-slate-700"
               placeholder="Enter description..."
             />
           </div>
 
+        
           <div className="mb-4">
-            <div className="text-slate-700 font-semibold text-sm mb-1">Directory</div>
+            <div className="dark:text-slate-100 text-slate-700 font-semibold text-sm mb-1">Directory</div>
             <select
               value={selectedDirectory}
               onChange={(e) => setSelectedDirectory(e.target.value)}
-              className="bg-slate-100 border-none px-4 py-2 w-full text-slate-600"
+              className="dark:bg-gray-700 dark:text-slate-100 bg-slate-100 border-none px-4 py-2 w-full text-slate-600"
             >
               {directories.map((dir) => (
                 <option key={dir._id} value={dir._id} className="text-slate-400">
@@ -152,10 +154,10 @@ export const AddNewTaskCard = ({  onAdded }) => {
               checked={important}
               onChange={(e) => setImportant(e.target.checked)}
             />
-            <label className="text-slate-700 text-sm font-medium">Mark as Important</label>
+            <label className="dark:text-slate-100 text-slate-700 text-sm font-medium">Mark as Important</label>
           </div>
 
-       
+     
           <div className="mb-4 flex items-center gap-2">
             <input
               className="appearance-none w-4 h-4 rounded-full border border-gray-500 checked:bg-purple-600 checked:border-purple-600"
@@ -163,7 +165,7 @@ export const AddNewTaskCard = ({  onAdded }) => {
               checked={completed}
               onChange={(e) => setCompleted(e.target.checked)}
             />
-            <label className="text-slate-700 text-sm font-medium">Mark as Completed</label>
+            <label className="dark:text-slate-100 text-slate-700 text-sm font-medium">Mark as Completed</label>
           </div>
 
           <DialogFooter>
