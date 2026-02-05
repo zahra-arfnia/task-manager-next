@@ -1,4 +1,4 @@
-import { AddNewTask } from "@/components/dialogs/addnewtask";
+import { AddNewTask } from "@/components/buttons/addnewtask";
 import { Input } from "@/components/ui/input";
 export const Header = ({
   onAdded,
