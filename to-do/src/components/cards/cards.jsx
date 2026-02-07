@@ -1,7 +1,7 @@
 import { CalendarRange, Star } from "lucide-react";
 import { DeleTask } from "../buttons/deletedtasks";
 import { EditTask } from "../buttons/edittask";
-import { AddNewTask } from "@/components/dialogs/addnewtask";
+import { AddNewTask } from "@/components/buttons/addnewtask";
 export const Cards = ({ tasks, onDeleted, sortOption, onAdded }) => {
   const sortedTasks = [...tasks].sort((a, b) => {
     switch (sortOption) {
