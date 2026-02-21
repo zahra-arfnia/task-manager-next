@@ -71,7 +71,7 @@ export const Cards = ({ tasks, onDeleted, sortOption, onAdded }) => {
           >
             <a
               href={`/directories/${itams.directory.name}`}
-              className="dark:bg-slate-700 dark:text-slate-300 absolute top-2 right-2 text-xs bg-red-200 text-red-400 font-bold p-2 rounded-md -translate-y-9"
+              className="dark:bg-slate-700 dark:text-slate-300 absolute top-2 right-2 text-xs bg-red-200 text-red-400 font-bold p-2 rounded-md -translate-y-9 hover:bg-red-300 duration-300 ease-in-out hover:text-red-500 dark:hover:bg-slate-500"
             >
               {itams.directory.name}
             </a>
