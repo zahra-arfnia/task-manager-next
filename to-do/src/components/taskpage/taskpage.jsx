@@ -18,23 +18,34 @@ export const TasksPage = ({ filterType = "all" }) => {
   const params = useParams();
   const directoryName = params && params.name;
 
-  let filteredTasks = tasks;
 
-  if (filterType === "important") {
-    filteredTasks = tasks.filter((task) => task.important);
-  } else if (filterType === "completed") {
-    filteredTasks = tasks.filter((task) => task.completed);
-  } else if (filterType === "uncompleted") {
-    filteredTasks = tasks.filter((task) => !task.completed);
-  } else if (filterType === "directory" && directoryName) {
-    filteredTasks = tasks.filter(
-      (task) => task.directory && task.directory.name === directoryName
-    );
-  } else if (filterType === "main") {
-    filteredTasks = tasks.filter(
-      (task) => task.directory && task.directory.name === "main"
-    );
-  }
+let filteredTasks = tasks;
+
+
+if (filterType === "important") {
+  filteredTasks = tasks.filter(task => task.important);
+
+} else if (filterType === "completed") {
+  filteredTasks = tasks.filter(task => task.completed);
+
+} else if (filterType === "uncompleted") {
+  filteredTasks = tasks.filter(task => !task.completed);
+
+
+} else if (directoryName) {
+  filteredTasks = tasks.filter(
+    task =>
+      task.directory?.name?.toLowerCase() ===
+      directoryName.toLowerCase()
+  );
+}
+  
+  const pageTitle = directoryName
+  ? directoryName
+  : filterType;
+
+
+
 
   filteredTasks = searchTerm.trim()
     ? filteredTasks.filter((task) =>
@@ -66,7 +77,7 @@ export const TasksPage = ({ filterType = "all" }) => {
               </div>
             ) : (
               <div className="dark:text-slate-100 text-slate-700 font-medium text-lg">
-                {filterType} Tasks ( {filteredTasks.length} tasks )
+                {pageTitle} Tasks ( {filteredTasks.length} tasks )
               </div>
             )}
 
